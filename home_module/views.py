@@ -1,12 +1,10 @@
-from typing import Any
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 import site_setting
 import site_setting.models
 from site_setting.models import Slider
 from utils.convertors import list_group
-from utils.get_ip import get_ip
-from project_module.models import ProductCategory, product,VisitedProduct
+from project_module.models import ProductCategory, product
 from django.db.models import Count,Sum
 
 # Create your views here.

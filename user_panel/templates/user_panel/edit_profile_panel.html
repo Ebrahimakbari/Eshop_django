@@ -8,7 +8,9 @@
             <div class="col-md-4 pull-right">
                 {% render_partial 'user_panel.views.side_panel_component' %}
                 <a href="#" class='thumbnail'>
-                    <img src="{{current_user.avatar.url}}" alt="">
+                    {% if current_user.avatar %}
+                        <img src="{{current_user.avatar.url}}" alt="">
+                    {% endif %}
                 </a>
             </div>
             <div class="col-md-8">

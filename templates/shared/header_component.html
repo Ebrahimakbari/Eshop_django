@@ -1,3 +1,5 @@
+{% load thumbnail %}
+
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
         <div class="container">
@@ -38,7 +40,11 @@
                 
                 <div class="col-sm-4" style="text-align: left;">
                     <div class="logo">
-                        <a href="index.html"><img src="{{site_setting.site_logo.url}}" alt="Logo" style="text-align: center;" /></a>
+                        {% thumbnail site_setting.site_logo "284x250" crop="center" as im %}
+                            <a href="">
+                                <img src="{{ im.url }}" width=50 height=50 style="text-align: center;" />
+                            </a>
+                        {% endthumbnail %}
                     </div>
                 </div>
                 
@@ -48,7 +54,6 @@
                             {% if request.user.is_authenticated %}
                                     {% if request.user.is_superuser %}
                                         <li><a href="/admin"><i class="fa fa-sign-in"></i> پنل ادمین </a></li>
-                                        <li><a href="{% url "admin_dashboard" %}"><i class="fa fa-sign-in"></i>پنل جدید ادمین</a></li>
                                     {% endif %}
                                 <li><a href="{% url "user_panel" %}"><i class="fa fa-user"></i> پنل کاربـری </a></li>
                                 <li><a href={% url "shopping_panel" %}><i class="fa fa-shopping-cart"></i> سبد خریـد </a></li>

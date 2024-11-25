@@ -1,4 +1,3 @@
-from typing import Any
 from django.views.generic.edit import CreateView, FormView
 from django.views.generic.list import ListView
 
