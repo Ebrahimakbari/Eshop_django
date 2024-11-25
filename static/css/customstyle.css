@@ -1,0 +1,20 @@
+.errorlist{
+    padding-right: 0;
+}
+
+.errorlist li{
+    color: red;
+}
+
+.curser-pointer {
+    cursor: pointer;
+}
+
+
+table.Border tr,
+table.Border th,
+table.Border td {
+    border: 1px solid rgb(97, 95, 95);
+    border-radius: 10px;
+    text-align: center;
+}

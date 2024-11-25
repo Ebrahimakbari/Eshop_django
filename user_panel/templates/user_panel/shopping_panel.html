@@ -1,0 +1,91 @@
+{% extends "shared/_layot.html" %}
+{% load poll_extras %}
+{% load thumbnail %}
+
+{% block title %}سبد خرید{% endblock title %}
+{% block content %}
+    {% if current_order.orderdetail_set.all %}
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                <li><a href="#">خانـه</a></li>
+                <li class="active">پرداخت</li>
+                </ol>
+            </div><!--/breadcrums-->
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">کـالا</td>
+                            <td class="description"></td>
+                            <td class="price">قیمت</td>
+                            <td class="quantity">تعـداد</td>
+                            <td class="total">مجمـوع</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in current_order.orderdetail_set.all %}
+                            <tr>
+                                <td class="cart_product">
+                                    {% thumbnail order.products.image "70x70" crop="center" as im %}
+                                        <a>
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        </a>
+                                    {% endthumbnail %}
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="">{{order.products.title}}</a></h4>
+                                    <p>شناسـه : 01010101</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p>{{order.products.price |three_digits}}</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        <a class="cart_quantity_up" onclick="send_count('add',{{order.products.id}})" href=''> + </a>
+                                        <input id="product_counts{{order.products.id}}" class="cart_quantity_input" type="number" name="quantity" value="{{order.count}}" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" onclick="send_count('-',{{order.products.id}})" href=''> - </a>   
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">{{order.get_full_price|three_digits}}</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" href="" onclick="delete_item_shopping({{order.products.id}})"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section> <!--/#cart_items-->
+
+    <section id="do_action">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                            <li>مجمـوع سبـد خریـد <span>{{total_price|three_digits}}</span></li>
+                        </ul>
+                            <a class="btn btn-default check_out" href="{% url "request_payment" %}">پرداخت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/#do_action-->
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <p>سبد خرید شما خالی است</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}

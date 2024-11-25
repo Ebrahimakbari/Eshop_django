@@ -1,0 +1,65 @@
+{% extends "shared/_layot.html" %}
+{% load poll_extras %}
+{% load thumbnail %}
+
+{% block title %}جزییات خرید{% endblock title %}
+{% block content %}
+    {% if current_order.orderdetail_set.all %}
+    <section id="cart_items">
+        <div class="container"><!--/breadcrums-->
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">کـالا</td>
+                            <td class="description">عنوان</td>
+                            <td class="price">قیمت</td>
+                            <td class="quantity">تعـداد</td>
+                            <td class="total">مجمـوع</td>
+                            <td class="date">تاریخ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in current_order.orderdetail_set.all %}
+                            <tr>
+                                <td class="cart_product">
+                                    {% thumbnail order.products.image "70x70" crop="center" as im %}
+                                        <a>
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        </a>
+                                    {% endthumbnail %}
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="{% url "product_detail" slug=order.products.slug %}">{{order.products.title}}</a></h4>
+                                </td>
+                                <td class="cart_price">
+                                    <p>{{order.products.price |three_digits}}</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        <input class="cart_quantity_input" type="number" name="quantity" value="{{order.count}}" autocomplete="off" size="2">
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">{{order.get_full_price|three_digits}}</p>
+                                </td>
+                                <td>{{current_order.date|show_jalali_date}} || {{current_order.date|show_jalali_time}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section> <!--/#cart_items-->
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <p>سبد خرید شما خالی است</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "shared/_layot.html" %}
+
+{% block title %}تماس با ما{% endblock title %}
+{% block content %}
+<div id="contact-page" class="container">
+    <div class="bg">    	
+        <div class="col-sm-12">
+            {% for profile in profiles %}
+            <ul>
+                <li><img src="{{ profile.image.url }}" class="img-responsive" width='150'></li>
+            </ul>
+            {% endfor %}
+        </div>  
+    </div>	
+</div>
+{% endblock content %}

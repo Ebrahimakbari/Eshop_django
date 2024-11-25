@@ -10,6 +10,7 @@
   display: inline-block;
   vertical-align: middle;
   position: relative;
+  color: ;
 }
 .slider.slider-horizontal {
   width: 210px;
@@ -121,3 +122,4 @@
 .slider-handle.triangle {
   background: transparent none;
 }
+

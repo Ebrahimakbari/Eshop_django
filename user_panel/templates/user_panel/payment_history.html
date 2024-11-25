@@ -1,0 +1,39 @@
+{% extends "shared/_layot.html" %}
+{% load render_partial %}
+{% load poll_extras %}
+
+{% block title %}سابقه خرید{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 pull-right">
+                {% render_partial 'user_panel.views.side_panel_component' %}
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">تاریخچه خرید های شما </div>
+                    <!-- Table -->
+                    <table class="table Border">
+                        <tr>
+                            <th>عنوان</th>
+                            <th>تعداد</th>
+                            <th>قیمت</th>
+                            <th>تاریخ</th>
+                            <th>جزییات</th>
+                        </tr>
+                        {% for history in historys.orderdetail_set.all %}
+                            <tr>
+                                <td>{{history.products.title}}</td>
+                                <td>{{history.count}}</td>
+                                <td>{{history.final_price|three_digits}}</td>
+                                <td>{{historys.date|show_jalali_date}} || {{historys.date|show_jalali_time}}</td>
+                                <td><a href="{% url "payment_detail" %}" class="btn btn-success">جزییات</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

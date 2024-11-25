@@ -1,0 +1,20 @@
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock title %}</title>
+    {% block header_c %}{% endblock header_c %}
+    {% include "shared/links.html" %}
+</head><!--/head-->
+<body>
+    {% render_partial 'home_module.views.header_component' %}
+    {% block content %}{% endblock content %}
+    {% render_partial 'home_module.views.footer_component' %}
+    {% include "shared/scripts.html" %}
+    {% block footer_c %}{% endblock footer_c %}
+</body>
+</html>

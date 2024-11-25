@@ -1,0 +1,45 @@
+{% load poll_extras %}
+{% load thumbnail %}
+
+
+<h2>نظر ها ({{comments_count}})</h2>
+<h1>test</h1>
+{% for comment in comments %}
+        <ul class="media-list">
+            <li class="media" id="single_comment_box_{{comment.id}}">
+                <a class="pull-right" href="#">
+                    {% thumbnail comment.user.avatar "121x86" crop='center' quality=70 as im %}
+                        <img src="{{ im.url }}">
+                    {% endthumbnail %}
+                </a>
+                <div class="media-body">
+                    <ul class="sinlge-post-meta">
+                        <li><i class="fa fa-user"></i>{{comment.user}}</li>
+                        <li><i class="fa fa-clock-o"></i>{{comment.created_date | show_jalali_time}}</li>
+                        <li><i class="fa fa-calendar"></i>{{comment.created_date | show_jalali_date}}</li>
+                    </ul>
+                    <p>{{comment.text}}</p>
+                    <a class="btn btn-primary" onclick="GetParent({{comment.id}})"><i class="fa fa-reply"></i>پاسـخ</a>
+                </div>
+            </li>
+        </ul>					
+        {% for reply in comment.articlecomment_set.all %}
+            <ul class="media-list second-media" id="single_comment_box_{{comment.id}}">
+                <li class="media">
+                    <a class="pull-right" href="#">
+                        {% thumbnail reply.user.avatar "121x86" crop='center' quality=70 as im %}
+                            <img src="{{ im.url }}">
+                        {% endthumbnail %}
+                    </a>
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta">
+                            <li><i class="fa fa-user"></i>{{reply.user}}</li>
+                            <li><i class="fa fa-clock-o"></i>{{reply.created_date | show_jalali_time}}</li>
+                            <li><i class="fa fa-calendar"></i>{{reply.created_date | show_jalali_date}}</li>
+                        </ul>
+                        <p>{{reply.text}}</p>
+                    </div>
+                </li>
+            </ul>					
+        {% endfor %}
+{% endfor %}

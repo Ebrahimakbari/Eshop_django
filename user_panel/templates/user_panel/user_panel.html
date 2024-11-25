@@ -1,0 +1,16 @@
+{% extends "shared/_layot.html" %}
+{% load render_partial %}
+
+{% block title %}پنل کاربری{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 pull-right">
+                {% render_partial 'user_panel.views.side_panel_component' %}
+            </div>
+            <div class="col-md-8">
+                <p>this is panel</p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

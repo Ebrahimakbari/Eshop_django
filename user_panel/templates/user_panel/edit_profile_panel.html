@@ -1,0 +1,23 @@
+{% extends "shared/_layot.html" %}
+{% load render_partial %}
+
+{% block title %}ویرایش پروفایل{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 pull-right">
+                {% render_partial 'user_panel.views.side_panel_component' %}
+                <a href="#" class='thumbnail'>
+                    <img src="{{current_user.avatar.url}}" alt="">
+                </a>
+            </div>
+            <div class="col-md-8">
+                <form enctype='multipart/form-data' action="{% url "edit_profile" %}" method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-primary pull-right">ارسال</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

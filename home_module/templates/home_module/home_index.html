@@ -1,0 +1,156 @@
+{% extends "shared/_layot.html" %}
+{% block title %}صفحه اصلی{% endblock title %}
+{% load thumbnail %}
+{% load poll_extras %}
+{% block content %}
+<section id="slider"><!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                    </ol>
+                    
+                    <div class="carousel-inner">
+                        {% for slider in sliders %}
+                            <div class="item {% if forloop.first %}active{% endif %}">
+                                <div class="col-sm-6">
+                                    <h2>{{slider.title}}</h2>
+                                    <p>{{slider.description}}</p>
+                                    <a href="{{ slider.url }}" class="btn btn-default get">{{slider.url_title}}</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{slider.image.url}}" class="img-responsive" alt="" />
+                                </div>
+                            </div>
+                        {% endfor %}
+                        
+                    </div>
+                    
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="recommended_items"><!--NewProduct_items-->
+                    <h2 class="title text-center">پر فروش ترین محصولات</h2>
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for group in list_groups %}
+                                <div class="item {% if forloop.first %}active{% endif %}">	
+                                    {% for item in group %}
+                                        {% include "include/project_module_list_include.html" with product=item col_conf=3 %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                         <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                          </a>
+                          <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                          </a>			
+                    </div>
+                </div><!--/NewProduct_items-->
+            <div class="col-sm-12 padding-right">
+                <div class="features_items"><!--RetailSale_items-->
+                    <a href="shop-2.html"><h2 class="title text-center">فـروش خـرده</h2></a>
+                    <div id="new-item-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for group in visited_groups %}
+                            <div class="item {% if forloop.first %}active{% endif %}">
+                                {% for item in group %}
+                                    {% include "include/project_module_list_include.html" with product=item col_conf=3 %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                        <a class="left recommended-item-control" href="#new-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                          </a>
+                          <a class="right recommended-item-control" href="#new-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                          </a>
+                </div>
+
+                <div class="features_items"><!--RetailSale_items-->
+                    <a href="shop-2.html"><h2 class="title text-center">پرفروش ترین محصولات</h2></a>
+                    <div id="new-item-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for group in most_sailed %}
+                            <div class="item {% if forloop.first %}active{% endif %}">
+                                {% for item in group %}
+                                    {% include "include/project_module_list_include.html" with product=item col_conf=3 %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                    {% if most_sailed|length > 4 %}
+                    <a class="left recommended-item-control" href="#major-item-carousel" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="right recommended-item-control" href="#major-item-carousel" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="category-tab"><!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            {% for category in categories %}
+                                <li class="{% if forloop.first %}active{% endif %}"><a href="#Tab_{{category.id}}" data-toggle="tab">{{category.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        {% for category in categories %}
+                            <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" id="Tab_{{category.id}}" >
+                                {% for product in category.product %}
+                                    <div class="col-sm-3">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    {% thumbnail product.image "284x250" crop="center" as im %}
+                                                        <a href="{{product.get_absolute_url}}">
+                                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                                        </a>
+                                                    {% endthumbnail %}
+                                                    <h2>{{product.price}}</h2>
+                                                    <p>{{product.title}}</p>
+                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                </div>
+                </div>
+
+                </div><!--WholeSale_items-->
+                </div><!--RetailSale_items-->					
+                </div><!--/category-tab-->
+            </div>
+            
+        </div>			
+    </div>
+</section>
+{% endblock content %}

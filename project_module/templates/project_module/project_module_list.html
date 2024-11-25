@@ -1,0 +1,77 @@
+{% extends "shared/_layot.html" %}
+{% load render_partial %}
+{% load thumbnail %}
+
+{% block title %}لیست محصولات{% endblock title %}
+{% block content %}
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 padding-right">
+        <div class="features_items"><!--features_items-->
+          <h2 class="title text-center">محصولات عمده</h2>
+          {% for product1 in product %}
+            {% include "include/project_module_list_include.html" with product=product1 col_conf=4%}
+          {% endfor %}
+          <div class="clearfix"></div>
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a class='curser-pointer' onclick="PageNumberFilterPrice({{page_obj.previous_page_number}})">قبلی</a></li>
+            {% endif %}
+            {% for pageNumber in paginator.page_range %}
+                <li class="{% if page_obj.number == pageNumber %} active {% endif %}"><a class='curser-pointer' onclick="PageNumberFilterPrice({{pageNumber}})">{{ pageNumber }}</a></li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a class='curser-pointer' onclick="PageNumberFilterPrice({{page_obj.next_page_number}})">بعدی</a></li>
+            {% endif %}
+          </ul>
+        </div><!--features_items-->
+      </div>
+      <div class="col-sm-3">
+        <div class="left-sidebar">
+          {% render_partial 'project_module.views.product_categories'%}
+          <div class="brands_products"><!--brands_products-->
+            {% render_partial 'project_module.views.product_brands'%}
+          </div><!--/brands_products-->
+          
+          <div class="price-range"><!--price-range-->
+            <h2>فیلتـر قیمـت</h2>
+            <div class="well">
+                <input type="text" 
+                class="span2" 
+                value="{{min_price}},{{max_price}}" 
+                data-slider-min="0" 
+                data-slider-max="{{db_max_price}}" 
+                data-slider-step="5" 
+                data-slider-value="[{{min_price}},{{max_price}}]" 
+                id="sl2">
+                <br>
+                <b>{{db_max_price}} ريال</b> <b class="pull-left">0 ريال</b>
+            </div>
+            <div>
+              <form action="" method='get' id='price_form'>
+                <input type="hidden" name='page' id='page_number' value='{{page_obj.number}}'>
+                <input type="hidden" name='min_price' id='min_price' value='{{min_price}}'>
+                <input type="hidden" name='max_price' id='max_price' value='{{max_price}}'>
+              </form>
+              <button class='btn btn-success btn-block' onclick='FilterForm()'>فیلتر</button>
+            </div>
+          </div><!--/price-range-->
+          
+          <div class="shipping text-center"><!--shipping-->
+            {% for banner in banners %}
+              <a href="{{banner.url}}">
+                  {% thumbnail banner.image "300x300" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                  {% endthumbnail %}
+              </a>
+            {% endfor %}
+          </div><!--/shipping-->
+          <br>
+          
+        </div>
+      </div>      
+    </div>
+  </div>
+</section>
+{% endblock content %}

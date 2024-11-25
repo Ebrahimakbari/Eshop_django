@@ -1,0 +1,38 @@
+{% load thumbnail %}
+{% load poll_extras %}
+
+<div class="col-sm-{{col_conf}}">
+  <div class="product-image-wrapper">
+    <div class="single-products">
+      <div class="productinfo text-center">
+        {% if product.image %}
+          {% thumbnail product.image "268x250" crop='center' quality=50 as im %}
+            <img src="{{ im.url }}">
+          {% endthumbnail %}
+        {% else %}
+          <img src="/static/images/home/shipping.jpg" alt="">
+        {% endif %}
+        <h2>{{ product.price|three_digits }}</h2>
+        <p>{{product.title}}</p>
+        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+      </div>
+      <div class="product-overlay">
+        <div class="overlay-content">
+          <h2>{{product.price|three_digits}}</h2>
+          <p>{{product.title}}</p>
+          <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+        </div>
+      </div>
+    </div>
+    <div class="choose">
+      <ul class="nav nav-pills nav-justified">
+        <li>
+          <a href="{% url "product_detail" slug=product.slug %}"><i class="fa fa-plus-square"></i> مشاهدی جزییات</a>
+        </li>
+        <li>
+          <a href=""><i class="fa fa-plus-square"></i>مقایسه</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
