@@ -37,9 +37,12 @@ class ProductListView(ListView):
         query = super().get_queryset()
         cate = self.kwargs.get('cat')
         brand = self.kwargs.get('brand')
+        q = self.request.GET.get('q')
         request : HttpRequest = self.request
         min_price = request.GET.get('min_price')
         max_price = request.GET.get('max_price')
+        if q is not None:
+            query = product.objects.search(q)
         if min_price is not None:
             query = query.filter(price__gte=min_price)
         if max_price is not None:

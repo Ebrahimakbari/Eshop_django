@@ -40,6 +40,14 @@ class ProductBrand(models.Model):
         verbose_name_plural = 'برند'
         
     
+class ProductManager(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset()
+    
+    def search(self,q):
+        return self.get_queryset().filter(title__icontains=q)
+
+
 class product(models.Model):
     title = models.CharField(max_length=300,verbose_name='عنوان محصول')
     price = models.IntegerField(verbose_name='قیمت')
@@ -51,6 +59,9 @@ class product(models.Model):
     is_active = models.BooleanField(default=False,verbose_name='فعال/غیرفعال')
     is_delete = models.BooleanField(default=False,verbose_name='حذف شده/نشده')
     slug = models.SlugField(default='',null=False,blank=True,max_length=300,unique=True)
+    
+    
+    objects = ProductManager()
     
     def __str__(self):
         return self.title
