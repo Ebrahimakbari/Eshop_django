@@ -3,6 +3,6 @@
     <hr>
     <p>کاربر گرامی جهت فعالسازی اکانت خود روی لینک زیر کلیک کنید</p>
     <p>
-        <a href="http://localhost:8000{% url "activate_account" activate_code=user.email_verification %}">فعال سازی حساب کاربری</a>
+        <a href="http://{{ host }}{% url "activate_account" activate_code=user.email_verification %}">فعال سازی حساب کاربری</a>
     </p>
 </div>

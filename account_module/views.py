@@ -32,7 +32,8 @@ class RegisterView(View):
                                 )
                 new_user.set_password(user_password)
                 new_user.save()
-                send_email('فعال سازی اکانت',{'user':new_user},new_user.email,'emails/active_account.html')
+                host =request.META['HTTP_HOST']
+                send_email('فعال سازی اکانت',{'user':new_user,'host':host,'request':request},new_user.email,'emails/active_account.html')
                 return redirect(reverse('login_page'))
         context = {'register_form': register_form}
         return render(request,'account_module/register_page.html',context)
@@ -100,7 +101,8 @@ class ResetView(View):
             email = reset_form.cleaned_data.get('email')
             user = User.objects.filter(email__iexact = email)
             if user is not None:
-                send_email('بازیابی کلمه عبور',{'user':user},user.email,'emails/reset_password.html')
+                host = request.META['HTTP_HOST']
+                send_email('بازیابی کلمه عبور',{'user':user,'host':host,'request':request},user.email,'emails/reset_password.html')
                 return redirect(reverse('login_page'))
         context = {'reset_form': reset_form}
         return render(request,'account_module/reset_pass_page.html',context)
